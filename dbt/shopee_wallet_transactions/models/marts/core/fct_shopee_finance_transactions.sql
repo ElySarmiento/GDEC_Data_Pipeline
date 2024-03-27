@@ -3,7 +3,8 @@
         materialized='incremental',
         unique_key=['txn_id' , 'sc_id' , 'amount' , 'txn_date' , 'txn_id' , 'txn_type' , 'plfm_ord_no'],
         incremental_strategy='merge',
-        merge_exclude_columns = ['SYS_INS_DATE_TIME','CRT_TIME']
+        merge_exclude_columns = ['SYS_INS_DATE_TIME','CRT_TIME'],
+        tags = ['shopee_wallet_transactions']
         )
 }}
 

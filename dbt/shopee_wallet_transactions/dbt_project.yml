@@ -39,6 +39,7 @@ models:
       shopee:
         shopee_finance_transactions:
           +materialized: view
+          +schema: DEV_RAW_SPE_SCH
       shops:
         +materialized: view
         +schema: DEV_INTEG_MANUAL_SCH

@@ -16,11 +16,11 @@ snowflake_trial = ProfileConfig(
     ),
 )
 
-snowflake_gdec_vinz = ProfileConfig(
-    profile_name="snowflake_gdec_vinz",
+snowflake_con = ProfileConfig(
+    profile_name="snowflake_con",
     target_name="dev",
     profile_mapping=SnowflakeUserPasswordProfileMapping(
-        conn_id="snowflake_gdec_vinz",
+        conn_id="snowflake_con",
         profile_args={
             "database": "DEV_DB",
             "schema": "DEV_INTEG_SPE_SCH"

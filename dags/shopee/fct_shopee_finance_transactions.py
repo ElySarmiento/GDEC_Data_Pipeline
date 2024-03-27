@@ -4,9 +4,9 @@ from airflow.decorators import dag
 from airflow.operators.empty import EmptyOperator
 
 
-from cosmos import DbtTaskGroup, ProjectConfig
+from cosmos import DbtTaskGroup, ProjectConfig, RenderConfig
 
-from include.profiles import snowflake_gdec_vinz
+from include.profiles import snowflake_con
 from include.constants import shopee_wallet_transactions_path, venv_execution_config
 
 
@@ -25,7 +25,10 @@ def shopee_wallet_transactions() -> None:
     shopee_wallet_transactions = DbtTaskGroup(
         group_id="shopee_wallet_transactions",
         project_config=ProjectConfig(shopee_wallet_transactions_path),
-        profile_config=snowflake_gdec_vinz,
+        profile_config=snowflake_con,
+        render_config=RenderConfig(
+            select=["tag:shopee_wallet_transactions"],
+        ),
         execution_config=venv_execution_config,
     )
     
