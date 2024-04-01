@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # EC2 Setup for Running Airflow via Astro CLI
 
 ## Installing dependencies
@@ -20,7 +19,6 @@ sudo apt upgrade
 ```shell
 python3 --version
 ```
-![[Pasted image 20240331164532.png]]
 3. Install Docker software updates:
 ```shell
 sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
@@ -74,6 +72,3 @@ git checkout develop
 sudo astro dev start
 ```
 
-=======
-# dbt-airflow
->>>>>>> 33ff877f38a605f8fe311c68cbcf910d89d24949
