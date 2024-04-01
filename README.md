@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # EC2 Setup for Running Airflow via Astro CLI
 
 ## Installing dependencies
@@ -73,3 +74,6 @@ git checkout develop
 sudo astro dev start
 ```
 
+=======
+# dbt-airflow
+>>>>>>> 33ff877f38a605f8fe311c68cbcf910d89d24949
