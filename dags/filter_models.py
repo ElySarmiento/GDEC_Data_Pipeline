@@ -2,8 +2,8 @@ from datetime import datetime
 
 from cosmos import DbtDag, ProjectConfig, RenderConfig
 
-from include.profiles import snowflake_trial
-from include.constants import jaffle_shop_path, venv_execution_config
+from plugins.profiles import snowflake_trial
+from plugins.constants import jaffle_shop_path, venv_execution_config
 
 only_models = DbtDag(
     project_config=ProjectConfig(jaffle_shop_path),

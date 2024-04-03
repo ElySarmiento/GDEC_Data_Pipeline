@@ -1,4 +1,4 @@
-{{ config(tags=['customers']) }}
+{{ config(tags=['customers', 'orders']) }}
 
 with source as (
 
