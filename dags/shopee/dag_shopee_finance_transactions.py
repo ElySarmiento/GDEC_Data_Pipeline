@@ -4,26 +4,26 @@ from pathlib import Path
 from airflow.decorators import dag
 from airflow.operators.empty import EmptyOperator
 
-from cosmos import DbtTaskGroup, ProjectConfig, RenderConfig
 from cosmos import ExecutionConfig
+from cosmos import DbtTaskGroup, ProjectConfig
 from cosmos import ProfileConfig
 from cosmos.profiles import SnowflakeUserPasswordProfileMapping
 
-jaffle_shop_path = Path("/opt/airflow/dbt/jaffle_shop")
+gdec_dbt_path = Path("/opt/airflow/dbt/gdec_dbt")
 dbt_executable = Path("/opt/airflow/dbt_venv/bin/dbt")
 
 venv_execution_config = ExecutionConfig(
     dbt_executable_path=str(dbt_executable),
 )
 
-snowflake_trial = ProfileConfig(
-    profile_name="snowflake_trial",
+dbt_snowflake = ProfileConfig(
+    profile_name="dbt_snowflake",
     target_name="dev",
     profile_mapping=SnowflakeUserPasswordProfileMapping(
-        conn_id="snowflake_trial",
+        conn_id="dbt_snowflake",
         profile_args={
-            "database": "dbt_hol_dev",
-            "schema": "public"
+            "database": "DEV_DB",
+            "schema": "DEV_INTEG_SPE_SCH"
       },
     ),
 )
@@ -32,25 +32,24 @@ snowflake_trial = ProfileConfig(
     schedule_interval="@daily",
     start_date=datetime(2023, 1, 1),
     catchup=False,
-    tags=["filtering"],
+    tags=["shopee"],
 )
-def customers_dag() -> None:
-
+def dag_shopee_finance_transactions() -> None:
+    """
+    The simplest example of using Cosmos to render a dbt project as a TaskGroup.
+    """
     pre_dbt = EmptyOperator(task_id="pre_dbt")
 
-    customers_tag = DbtTaskGroup(
-        group_id="jaffle_shop_customers",
-        project_config=ProjectConfig(jaffle_shop_path),
-        profile_config=snowflake_trial,
+    shopee_finance_transactions = DbtTaskGroup(
+        group_id="shopee_finance_transactions",
+        project_config=ProjectConfig(gdec_dbt_path),
+        profile_config=dbt_snowflake,
         execution_config=venv_execution_config,
-        # new render config
-        render_config=RenderConfig(
-            select=["tag:customers"],
-        )
     )
 
     post_dbt = EmptyOperator(task_id="post_dbt")
 
-    pre_dbt >> customers_tag >> post_dbt
+    pre_dbt >> shopee_finance_transactions >> post_dbt
 
-customers_dag()
+
+dag_shopee_finance_transactions()

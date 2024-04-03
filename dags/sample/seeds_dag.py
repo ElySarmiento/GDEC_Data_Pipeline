@@ -4,8 +4,8 @@ from pathlib import Path
 from airflow.decorators import dag
 from airflow.operators.empty import EmptyOperator
 
+from cosmos import DbtTaskGroup, ProjectConfig, RenderConfig
 from cosmos import ExecutionConfig
-from cosmos import DbtTaskGroup, ProjectConfig
 from cosmos import ProfileConfig
 from cosmos.profiles import SnowflakeUserPasswordProfileMapping
 
@@ -32,16 +32,26 @@ snowflake_trial = ProfileConfig(
     schedule_interval="@daily",
     start_date=datetime(2023, 1, 1),
     catchup=False,
-    tags=["simple"],
+    tags=["filtering"],
 )
-def simple_dag() -> None:
-    jaffle_shop = DbtTaskGroup(
-        group_id="my_jaffle_shop_project",
+def seeds_dag() -> None:
+
+    pre_dbt = EmptyOperator(task_id="pre_dbt")
+
+    seeds = DbtTaskGroup(
+        group_id="jaffle_shop_seeds",
         project_config=ProjectConfig(jaffle_shop_path),
         profile_config=snowflake_trial,
         execution_config=venv_execution_config,
+        # new render config
+        render_config=RenderConfig(
+            select=["path:seeds"],
+        )
     )
-    jaffle_shop
 
+    post_dbt = EmptyOperator(task_id="post_dbt")
 
-simple_dag()
+    pre_dbt >> seeds >> post_dbt
+
+seeds_dag()
+

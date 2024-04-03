@@ -34,23 +34,23 @@ snowflake_trial = ProfileConfig(
     catchup=False,
     tags=["filtering"],
 )
-def orders_dag() -> None:
+def models_dag() -> None:
 
     pre_dbt = EmptyOperator(task_id="pre_dbt")
 
-    orders_tag = DbtTaskGroup(
-        group_id="jaffle_shop_orders",
+    models = DbtTaskGroup(
+        group_id="jaffle_shop_models",
         project_config=ProjectConfig(jaffle_shop_path),
         profile_config=snowflake_trial,
         execution_config=venv_execution_config,
         # new render config
         render_config=RenderConfig(
-            select=["tag:orders"],
+            select=["path:models"],
         )
     )
 
     post_dbt = EmptyOperator(task_id="post_dbt")
 
-    pre_dbt >> orders_tag >> post_dbt
+    pre_dbt >> models >> post_dbt
 
-orders_dag()
+models_dag()
