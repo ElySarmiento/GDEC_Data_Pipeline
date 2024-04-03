@@ -32,7 +32,7 @@ snowflake_trial = ProfileConfig(
     schedule_interval="@daily",
     start_date=datetime(2023, 1, 1),
     catchup=False,
-    tags=["simple"],
+    tags=["example"],
 )
 def simple_dag() -> None:
     jaffle_shop = DbtTaskGroup(

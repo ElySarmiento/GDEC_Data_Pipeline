@@ -32,7 +32,7 @@ snowflake_trial = ProfileConfig(
     schedule_interval="@daily",
     start_date=datetime(2023, 1, 1),
     catchup=False,
-    tags=["filtering"],
+    tags=["example"],
 )
 def orders_dag() -> None:
 
