@@ -28,7 +28,7 @@ dbt_snowflake = ProfileConfig(
 )
 
 @dag(
-    schedule_interval="@daily",
+    schedule_interval="*/10 * * * *",
     start_date=datetime(2023, 1, 1),
     catchup=False,
     tags=["shopee"],
