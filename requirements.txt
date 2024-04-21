@@ -1,2 +1,5 @@
 astronomer-cosmos
 apache-airflow-providers-snowflake
+
+pandas
+openpyxl
