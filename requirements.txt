@@ -1,5 +1,7 @@
 astronomer-cosmos
 apache-airflow-providers-snowflake
+apache-airflow-providers-slack
+apache-airflow-providers-slack[http]
 apache-airflow[amazon]
 
 pandas
